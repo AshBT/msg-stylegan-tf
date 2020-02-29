@@ -603,7 +603,7 @@ def _get_all_files(path):
     return return_list
 
 
-def create_from_images(tfrecord_dir, image_dir, shuffle, resize=None):
+def create_from_images(tfrecord_dir, image_dir, shuffle, new_size=None):
     print('Loading images from "%s"' % image_dir)
     image_filenames = _get_all_files(image_dir)
     print(f"detected {len(image_filenames)} images ...")
@@ -612,7 +612,7 @@ def create_from_images(tfrecord_dir, image_dir, shuffle, resize=None):
     img = np.asarray(PIL.Image.open(image_filenames[0]))
     resolution = img.shape[0]
     channels = img.shape[2] if img.ndim == 3 else 1
-    if resize is None:
+    if new_size is None:
         if img.shape[1] != resolution:
             error("Input images must have the same width and height")
         if resolution != 2 ** int(np.floor(np.log2(resolution))):
@@ -627,8 +627,8 @@ def create_from_images(tfrecord_dir, image_dir, shuffle, resize=None):
         print("Adding the images to tfrecords ...")
         for idx in range(order.size):
             img = np.asarray(PIL.Image.open(image_filenames[order[idx]]))
-            if resize is not None:
-                size = int(2 ** resize)
+            if new_size is not None:
+                size = int(2 ** new_size)
                 img = resize(img, (size, size))
             if channels == 1:
                 img = img[np.newaxis, :, :]  # HW => CHW
