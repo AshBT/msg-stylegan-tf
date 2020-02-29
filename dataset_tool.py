@@ -15,7 +15,7 @@ import tensorflow as tf
 
 import dnnlib.tflib as tflib
 from training import dataset
-from scipy.misc import imresize
+from skimage.transform import resize
 
 
 # ----------------------------------------------------------------------------
