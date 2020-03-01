@@ -30,9 +30,9 @@ submit_config = dnnlib.SubmitConfig()                                           
 tf_config     = {'rnd.np_random_seed': 333}                                            # Options for tflib.init_tf().
 
 # Dataset.
-#desc += '-ffhq';      dataset = EasyDict(tfrecord_dir='ffhq/tfrecords');       train.mirror_augment = True
+desc += '-canadian_landscapes'; dataset = EasyDict(tfrecord_dir="data/CanadianaLandscapes/1_tfrecord/"); train.mirror_augment = True
 #desc += '-indian_celebs';  dataset = EasyDict(tfrecord_dir='indian_celebs/tfrecords', resolution=256); train.mirror_augment = True
-desc += '-movies';  dataset = EasyDict(tfrecord_dir='movies/tfrecords', resolution=1024); train.mirror_augment = False
+# desc += '-movies';  dataset = EasyDict(tfrecord_dir='movies/tfrecords', resolution=1024); train.mirror_augment = False
 #desc += '-ffhq512';  dataset = EasyDict(tfrecord_dir='ffhq', resolution=512); train.mirror_augment = True
 #desc += '-ffhq256';  dataset = EasyDict(tfrecord_dir='ffhq', resolution=256); train.mirror_augment = True
 #desc += '-celebahq'; dataset = EasyDict(tfrecord_dir='celebahq');             train.mirror_augment = True
@@ -47,7 +47,7 @@ desc += '-4gpu'; submit_config.num_gpus = 4; sched.minibatch_size = 16
 #desc += '-8gpu'; submit_config.num_gpus = 8; sched.minibatch_size = 32
 
 # Default options.
-train.total_kimg = 25000
+train.total_kimg = 1107
 sched.G_lrate = 0.003
 sched.D_lrate = sched.G_lrate
 
@@ -65,16 +65,16 @@ network_snapshot_ticks = 10
 # desc += '-wgangp'; G_loss = EasyDict(func_name='training.loss.G_wgan'); D_loss = EasyDict(func_name='training.loss.D_wgan_gp'); sched.G_lrate_dict = {k: min(v, 0.002) for k, v in sched.G_lrate_dict.items()}; sched.D_lrate_dict = EasyDict(sched.G_lrate_dict)
 
 # Table 1.
-# desc += '-tuned-baseline'; G.use_styles = False; G.use_pixel_norm = True; G.use_instance_norm = False; G.mapping_layers = 0; G.truncation_psi = None; G.const_input_layer = False; G.style_mixing_prob = 0.0; G.use_noise = False
+desc += '-tuned-baseline'; G.use_styles = False; G.use_pixel_norm = True; G.use_instance_norm = False; G.mapping_layers = 0; G.truncation_psi = None; G.const_input_layer = False; G.style_mixing_prob = 0.0; G.use_noise = False
 # desc += '-add-mapping-and-styles'; G.const_input_layer = False; G.style_mixing_prob = 0.0; G.use_noise = False
 # desc += '-remove-traditional-input'; G.style_mixing_prob = 0.0; G.use_noise = False
 # desc += '-add-noise-inputs'; G.style_mixing_prob = 0.0
-# desc += '-mixing-regularization' # default
+desc += '-mixing-regularization' # default
 
 # Table 2.
 # desc += '-mix0'; G.style_mixing_prob = 0.0
 # desc += '-mix50'; G.style_mixing_prob = 0.5
-# desc += '-mix90'; G.style_mixing_prob = 0.9 # default
+desc += '-mix90'; G.style_mixing_prob = 0.9 # default
 # desc += '-mix100'; G.style_mixing_prob = 1.0
 
 # Table 4.
@@ -83,7 +83,7 @@ network_snapshot_ticks = 10
 # desc += '-stylebased-0'; G.mapping_layers = 0
 # desc += '-stylebased-1'; G.mapping_layers = 1
 # desc += '-stylebased-2'; G.mapping_layers = 2
-# desc += '-stylebased-8'; G.mapping_layers = 8 # default
+desc += '-stylebased-8'; G.mapping_layers = 8 # default
 
 # ----------------------------------------------------------------------------
 # Main entry point for training.
