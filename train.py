@@ -48,11 +48,20 @@ desc += '-4gpu'; submit_config.num_gpus = 4; sched.minibatch_size = 16
 
 # Default options.
 train.total_kimg = 1107
-sched.G_lrate = 0.003
+sched.G_lrate = 0.002
 sched.D_lrate = sched.G_lrate
 
 # related to frequency of logs:
 sched.tick_kimg = 10
+sched.lod_initial_resolution = 8
+sched.G_lrate_base = sched.D_lrate_base = 0.001
+sched.G_lrate_dict = sched.D_lrate_dict = {128: 0.0015, 256: 0.002, 512: 0.003, 1024: 0.003}
+sched.minibatch_size_base = 32 # (default)
+sched.minibatch_size_dict = {8: 256, 16: 128, 32: 64, 64: 32}
+sched.minibatch_gpu_base = 4 # (default)
+sched.minibatch_gpu_dict = {8: 32, 16: 16, 32: 8, 64: 4}
+
+
 image_snapshot_ticks = 1
 network_snapshot_ticks = 10
 
