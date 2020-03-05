@@ -48,20 +48,11 @@ desc += '-4gpu'; submit_config.num_gpus = 4; sched.minibatch_size = 16
 
 # Default options.
 train.total_kimg = 1107
-sched.G_lrate = 0.002
+sched.G_lrate = 0.003
 sched.D_lrate = sched.G_lrate
 
 # related to frequency of logs:
 sched.tick_kimg = 10
-sched.lod_initial_resolution = 8
-sched.G_lrate_base = sched.D_lrate_base = 0.001
-sched.G_lrate_dict = sched.D_lrate_dict = {128: 0.0015, 256: 0.002, 512: 0.003, 1024: 0.003}
-# sched.minibatch_size_base = 32 # (default)
-# sched.minibatch_size_dict = {8: 256, 16: 128, 32: 64, 64: 32}
-# sched.minibatch_gpu_base = 8 # (default)
-# sched.minibatch_gpu_dict = {8: 32, 16: 16, 32: 8, 64: 4}
-
-
 image_snapshot_ticks = 1
 network_snapshot_ticks = 10
 
@@ -71,7 +62,7 @@ network_snapshot_ticks = 10
 # network_snapshot_ticks = 1
 
 # WGAN-GP loss for CelebA-HQ.
-desc += '-wgangp'; G_loss = EasyDict(func_name='training.loss.G_wgan'); D_loss = EasyDict(func_name='training.loss.D_wgan_gp'); sched.G_lrate_dict = {k: min(v, 0.002) for k, v in sched.G_lrate_dict.items()}; sched.D_lrate_dict = EasyDict(sched.G_lrate_dict)
+# desc += '-wgangp'; G_loss = EasyDict(func_name='training.loss.G_wgan'); D_loss = EasyDict(func_name='training.loss.D_wgan_gp'); sched.G_lrate_dict = {k: min(v, 0.002) for k, v in sched.G_lrate_dict.items()}; sched.D_lrate_dict = EasyDict(sched.G_lrate_dict)
 
 # Table 1.
 desc += '-tuned-baseline'; G.use_styles = False; G.use_pixel_norm = True; G.use_instance_norm = False; G.mapping_layers = 0; G.truncation_psi = None; G.const_input_layer = False; G.style_mixing_prob = 0.0; G.use_noise = False
